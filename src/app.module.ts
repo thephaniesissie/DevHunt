@@ -6,9 +6,17 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
 import { SocketGateway } from './websocket/socket.gateway';
+import { BadgesModule } from './badges/badges.module';
+import { ProjectsModule } from './projects/projects.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), AuthModule, DatabaseModule, UserModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }),
+    AuthModule,
+    DatabaseModule, 
+    UserModule, 
+    BadgesModule, 
+    ProjectsModule,
+  ],
   controllers: [AppController],
   providers: [AppService, SocketGateway],
 })

@@ -27,7 +27,7 @@ async function bootstrap() {
         description: 'Saisissez votre token JWT',
         in: 'header',
       },
-      'JWT-auth', // Nom du schéma de sécurité
+      'JWT-auth',
     )
     .build();
 

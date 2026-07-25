@@ -1,5 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Project } from "src/projects/entities/project.entity";
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
@@ -13,4 +13,7 @@ export class User {
 
   @Column()
   password!: string; // Stocké sous forme de hash bcrypt
+
+  @OneToMany(() => Project, (project) => project.user)
+  projects: Project[];
 }
