@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Test WebSocket NestJS</title>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+</head>
+<body style="font-family: sans-serif; padding: 20px;">
+  <h2>🧪 Testeur de WebSocket</h2>
+  
+  <label for="token">Access Token (JWT) :</label><br>
+  <textarea id="token" rows="4" cols="60" placeholder="Collez votre token ici..."></textarea>
+  <br><br>
+
+  <button onclick="connecterSocket()">Se connecter</button>
+  <button onclick="deconnecterSocket()">Se déconnecter</button>
+
+  <h3>Statut : <span id="status" style="color: gray;">Non connecté</span></h3>
+
+  <script>
+    let socket = null;
+
+    function connecterSocket() {
+      const token = document.getElementById('token').value.trim();
+      const statusEl = document.getElementById('status');
+
+      if (!token) {
+        alert('Veuillez coller un Token JWT valide !');
+        return;
+      }
+
+      // Connexion au WebSocket avec le token dans l'objet auth
+      socket = io('http://localhost:3000', {
+        auth: { token: token }
+      });
+
+      socket.on('connect', () => {
+        statusEl.innerText = '🟢 Connecté avec succès ! ID: ' + socket.id;
+        statusEl.style.color = 'green';
+      });
+
+      socket.on('connect_error', (err) => {
+        statusEl.innerText = '🔴 Erreur de connexion : ' + err.message;
+        statusEl.style.color = 'red';
+      });
+
+      socket.on('disconnect', () => {
+        statusEl.innerText = '🟡 Déconnecté';
+        statusEl.style.color = 'orange';
+      });
+    }
+
+    function deconnecterSocket() {
+      if (socket) {
+        socket.disconnect();
+      }
+    }
+  </script>
+</body>
+</html>
