@@ -1,41 +1,45 @@
 // src/main.ts
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Validation globale des DTOs
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  // Validation globale
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true,
+    whitelist: true,
+    forbidNonWhitelisted: true,
+    transformOptions: {
+      enableImplicitConversion: true,
+    },
+  }));
 
-  // Activer CORS pour autoriser le front-end ou Socket.IO
-  app.enableCors();
-
-  // --- Configuration Swagger ---
   const config = new DocumentBuilder()
-    .setTitle('API Auth & WebSockets')
-    .setDescription("Documentation de l'API d'authentification et de communication temps réel via WebSockets")
+    .setTitle('API de Chat et Notifications')
+    .setDescription('API pour la messagerie en temps réel et les notifications')
     .setVersion('1.0')
+    .addTag('Chat')
+    .addTag('Notifications')
+    .addTag('Authentification')
     .addBearerAuth(
       {
         type: 'http',
         scheme: 'bearer',
         bearerFormat: 'JWT',
         name: 'JWT',
-        description: 'Saisissez votre token JWT',
+        description: 'Entrez votre token JWT',
         in: 'header',
       },
-      'JWT-auth', // Nom du schéma de sécurité
+      'JWT-auth',
     )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document); // L'URL Swagger sera : http://localhost:3000/api/docs
+  SwaggerModule.setup('api/docs', app, document);
 
   await app.listen(3000);
-  console.log(`🚀 Application lancée sur : http://localhost:3000`);
-  console.log(`📚 Swagger dispo sur : http://localhost:3000/api/docs`);
 }
 bootstrap();

@@ -2,6 +2,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { config } from 'process';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         username: configService.get<string>('POSTGRES_USER'),
         password: configService.get<string>('POSTGRES_PASSWORD'),
         database: configService.get<string>('POSTGRES_DB'),
+        url: configService.get<string>('DATABASE_URL'),
         autoLoadEntities: true, // Charge automatiquement tes entités (User, etc.)
         synchronize: true, // ⚠️ Mettre à false en PRODUCTION (synchronise les entités avec la BDD)
       }),
