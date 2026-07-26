@@ -1,4 +1,3 @@
-
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { Project } from "src/projects/entities/project.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
@@ -22,5 +21,4 @@ export class User {
 
   @OneToMany(() => Notification, (notification) => notification.user)
   notifications!: Notification[];
-  origin/chat
 }
