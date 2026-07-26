@@ -8,8 +8,10 @@ import { UserModule } from './user/user.module';
 import { SocketGateway } from './websocket/socket.gateway';
 import { ProjectsModule } from './projects/projects.module';
 import { ChatModule } from './chat/chat.module';
-import { BadgeEarnedModule } from './badge_earned/badge_earned.module';
 import { BadgesModule } from './badges/badges.module';
+import { GoalsProgressModule } from './goals-progress/goals-progress.module';
+import { CommentsModule } from './comment/comment.module';
+import { BadgesEarnedModule } from './badge_earned/badge_earned.module';
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }), 
     AuthModule, 
@@ -18,7 +20,9 @@ import { BadgesModule } from './badges/badges.module';
     ProjectsModule,
     BadgesModule,
     ChatModule,
-    BadgeEarnedModule
+    BadgesEarnedModule,
+    GoalsProgressModule,
+    CommentsModule
   ],
   controllers: [AppController],
   providers: [AppService, SocketGateway],

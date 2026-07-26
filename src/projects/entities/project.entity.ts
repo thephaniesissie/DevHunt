@@ -12,6 +12,9 @@ import { User } from 'src/user/entities/user.entity';
 import { FrequencyType } from '../enums/frequency-type.enum';
 import { ProjectStatus } from '../enums/project-status.enum';
 import { BadgeEarned } from 'src/badge_earned/entities/badge-earned.entity';
+import { GoalsProgress } from 'src/goals-progress/entities/goals-progress.entity';
+import { Comment } from 'src/comment/entities/comment.entity'; // Ajouter l'import
+
 @Entity('projects')
 @Check(
   `("is_public" = FALSE) OR (
@@ -22,39 +25,39 @@ import { BadgeEarned } from 'src/badge_earned/entities/badge-earned.entity';
 )
 export class Project {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @ManyToOne(() => User, (user) => user.projects, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  user!: User;
 
   @Column({ name: 'user_id' })
-  userId: number;
+  userId!: number;
 
   @Column({ type: 'varchar', length: 150 })
-  title: string;
+  title!: string;
 
   @Column({ type: 'text', nullable: true })
-  description: string | null;
+  description!: string | null;
   
   @Column({ type: 'text', nullable: true, name: 'type_projects' })
-  typeProjects: string | null;
+  typeProjects!: string | null;
 
   // --- Champs Open-Relais (V3.0) ---
   @Column({ type: 'boolean', default: false, name: 'is_public' })
-  isPublic: boolean;
+  isPublic!: boolean;
 
   @Column({ type: 'text', nullable: true, name: 'public_description' })
-  publicDescription: string | null;
+  publicDescription!: string | null;
 
   @Column({ type: 'varchar', length: 255, nullable: true, name: 'project_link' })
-  projectLink: string | null;
+  projectLink!: string | null;
 
   @Column({ type: 'varchar', length: 255, nullable: true, name: 'doc_link' })
-  docLink: string | null;
+  docLink!: string | null;
 
   @Column({ type: 'varchar', length: 255, nullable: true, name: 'cover_image_url' })
-  coverImageUrl: string | null;
+  coverImageUrl!: string | null;
   // --- Fin champs Open-Relais ---
 
   @ManyToOne(() => Project, (project) => project.children, {
@@ -62,36 +65,42 @@ export class Project {
     nullable: true,
   })
   @JoinColumn({ name: 'parent_project_id' })
-  parentProject: Project | null;
+  parentProject!: Project | null;
 
   @Column({ name: 'parent_project_id', nullable: true })
-  parentProjectId: number | null;
+  parentProjectId!: number | null;
 
   @OneToMany(() => Project, (project) => project.parentProject)
-  children: Project[];
+  children!: Project[];
 
   @Column({ type: 'enum', enum: FrequencyType, name: 'frequency_type' })
-  frequencyType: FrequencyType;
+  frequencyType!: FrequencyType;
 
   @Column({ type: 'int', name: 'frequency_target_minutes' })
-  frequencyTargetMinutes: number;
+  frequencyTargetMinutes!: number;
 
   @Column({
     type: 'enum',
     enum: ProjectStatus,
     default: ProjectStatus.ACTIVE,
   })
-  status: ProjectStatus;
+  status!: ProjectStatus;
 
   @Column({ type: 'int', default: 0, name: 'current_streak' })
-  currentStreak: number;
+  currentStreak!: number;
 
   @Column({ type: 'int', default: 0, name: 'best_streak' })
-  bestStreak: number;
+  bestStreak!: number;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
-  createdAt: Date;
+  createdAt!: Date;
 
   @OneToMany(() => BadgeEarned, (badgeEarned) => badgeEarned.project)
-  badgesEarned: BadgeEarned[];
+  badgesEarned!: BadgeEarned[];
+
+  @OneToMany(() => GoalsProgress, (progress) => progress.project)
+  goalsProgress!: GoalsProgress[];
+
+  @OneToMany(() => Comment, (comment) => comment.project)
+  comments!: Comment[];
 }

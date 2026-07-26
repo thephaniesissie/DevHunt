@@ -1,14 +1,24 @@
+import { IsInt, IsPositive, IsOptional, IsString, IsObject } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsPositive } from 'class-validator';
 
 export class CreateBadgeEarnedDto {
   @ApiProperty({ example: 1 })
   @IsInt()
   @IsPositive()
-  projectId: number;
+  badgeId!: number;
 
-  @ApiProperty({ example: 3 })
+  @ApiProperty({ example: 1 })
   @IsInt()
   @IsPositive()
-  badgeId: number;
+  projectId!: number;
+
+  @ApiProperty({ example: 'A complété 30 jours de travail', required: false })
+  @IsOptional()
+  @IsString()
+  achievementContext?: string;
+
+  @ApiProperty({ example: { streak: 30 }, required: false })
+  @IsOptional()
+  @IsObject()
+  metadata?: Record<string, any>;
 }
