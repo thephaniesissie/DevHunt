@@ -7,7 +7,6 @@ import {
   IsEnum,
   IsInt,
   Min,
-  IsUUID,
 } from 'class-validator';
 import { FrequencyType } from '../enums/frequency-type.enum';
 
@@ -23,6 +22,11 @@ export class CreateProjectDto {
   @IsOptional()
   description?: string;
 
+  @ApiPropertyOptional({ example: 'Développement Web' })
+  @IsString()
+  @IsOptional()
+  typeProjects?: string;
+
   @ApiProperty({ enum: FrequencyType, example: FrequencyType.DAILY })
   @IsEnum(FrequencyType)
   frequencyType: FrequencyType;
@@ -31,8 +35,5 @@ export class CreateProjectDto {
   @IsInt()
   @Min(1)
   frequencyTargetMinutes: number;
-
-  @IsUUID()
-  @IsOptional()
-  parentProjectId?: string;
+  
 }

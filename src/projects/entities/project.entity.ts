@@ -21,8 +21,8 @@ import { ProjectStatus } from '../enums/project-status.enum';
   )`,
 )
 export class Project {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ManyToOne(() => User, (user) => user.projects, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
@@ -36,6 +36,9 @@ export class Project {
 
   @Column({ type: 'text', nullable: true })
   description: string | null;
+  
+  @Column({ type: 'text', nullable: true, name: 'type_projects' })
+  typeProjects: string | null;
 
   // --- Champs Open-Relais (V3.0) ---
   @Column({ type: 'boolean', default: false, name: 'is_public' })
@@ -62,7 +65,7 @@ export class Project {
   parentProject: Project | null;
 
   @Column({ name: 'parent_project_id', nullable: true })
-  parentProjectId: string | null;
+  parentProjectId: number | null;
 
   @OneToMany(() => Project, (project) => project.parentProject)
   children: Project[];

@@ -1,6 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { Project } from "src/projects/entities/project.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Notification } from "src/notification/entities/notification.entity";
 @Entity('users')
 export class User {
