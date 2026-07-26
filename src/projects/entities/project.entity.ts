@@ -11,7 +11,7 @@ import {
 import { User } from 'src/user/entities/user.entity';
 import { FrequencyType } from '../enums/frequency-type.enum';
 import { ProjectStatus } from '../enums/project-status.enum';
-
+import { BadgeEarned } from 'src/badge_earned/entities/badge-earned.entity';
 @Entity('projects')
 @Check(
   `("is_public" = FALSE) OR (
@@ -91,4 +91,7 @@ export class Project {
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
+
+  @OneToMany(() => BadgeEarned, (badgeEarned) => badgeEarned.project)
+  badgesEarned: BadgeEarned[];
 }

@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-// import { BadgeEarned } from '../../badges-earned/entities/badge-earned.entity';
+import { BadgeEarned } from 'src/badge_earned/entities/badge-earned.entity';
 
 @Entity('badges')
 export class Badge {
@@ -15,6 +15,6 @@ export class Badge {
   @Column({ type: 'text', nullable: true })
   description: string;
 
-//   @OneToMany(() => BadgeEarned, (be) => be.badge)
-//   badgesEarned: BadgeEarned[];
+  @OneToMany(() => BadgeEarned, (badgeEarned) => badgeEarned.badge)
+  badgeEarned: BadgeEarned[];
 }
