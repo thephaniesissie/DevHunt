@@ -1,11 +1,8 @@
-<<<<<<< HEAD
+
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { Project } from "src/projects/entities/project.entity";
-=======
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Notification } from "src/notification/entities/notification.entity";
-
->>>>>>> origin/chat
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
@@ -20,11 +17,10 @@ export class User {
   @Column()
   password!: string; // Stocké sous forme de hash bcrypt
 
-<<<<<<< HEAD
   @OneToMany(() => Project, (project) => project.user)
   projects: Project[];
-=======
+
   @OneToMany(() => Notification, (notification) => notification.user)
   notifications!: Notification[];
->>>>>>> origin/chat
+  origin/chat
 }
