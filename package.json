@@ -85,5 +85,8 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "scripts": {
+    "seed": "ts-node -r tsconfig-paths/register src/database/seeds/run-seed.ts"
   }
 }

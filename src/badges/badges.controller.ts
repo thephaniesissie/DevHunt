@@ -10,12 +10,8 @@ export class BadgesController {
   findAll() {
     return this.badgesService.findAll();
   }
-
-  @Patch(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateBadgeDto: UpdateBadgeDto,
-  ) {
-    return this.badgesService.update(id, updateBadgeDto);
+  @Get(':id')
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.badgesService.findOne(id);
   }
 }
